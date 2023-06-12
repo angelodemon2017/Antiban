@@ -7,7 +7,7 @@ public class RestrictionTimeLineManager
 {
     private readonly Dictionary<int, RestrictionTimeLine> _restrictionTimeLines;
 
-    private readonly Dictionary<int, TimeSpan> _timings = new Dictionary<int, TimeSpan>()
+    private readonly Dictionary<int, TimeSpan> _mapTimings = new Dictionary<int, TimeSpan>()
     {
         {-1, TimeSpan.FromSeconds(10)},
         {0, TimeSpan.FromSeconds(60)}, 
@@ -39,7 +39,7 @@ public class RestrictionTimeLineManager
             for (var p = -1; p <= priority; p++)
             {
                 var restrictionTimeLine = Get(p);
-                var restrictionTime = new RestrictionTime(startTime, _timings[p]);
+                var restrictionTime = new RestrictionTime(startTime, _mapTimings[p]);
                 
                 var freeSpace = restrictionTimeLine.FindFreeSpace(restrictionTime);
                 if (freeSpace.Start <= restrictionTime.Start) continue;
@@ -62,7 +62,7 @@ public class RestrictionTimeLineManager
         for (var p = -1; p <= priority; p++)
         {
             var restrictionTimeLine = Get(p);
-            var restrictionTime = new RestrictionTime(sentDateTime, _timings[p]);
+            var restrictionTime = new RestrictionTime(sentDateTime, _mapTimings[p]);
             restrictionTimeLine.Add(restrictionTime);
         }
 
